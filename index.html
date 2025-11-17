@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Метод Илизарова в трёх соснах</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Метод Илизарова в трёх соснах — выездная научно-практическая конференция по травматологии и ортопедии. Курганская область, база отдыха «Голубые озера», 5–7 июня 2026 года.">
+  <style>
+    :root {
+      --primary: #005b7f;
+      --primary-dark: #00415e;
+      --accent: #2f855a;
+      --bg: #f4f7fb;
+      --text: #1f2933;
+      --muted: #6b7280;
+      --white: #ffffff;
+      --border: #d1d5db;
+      --shadow-soft: 0 10px 25px rgba(15, 23, 42, 0.1);
+      --radius-lg: 18px;
+      --radius-xl: 24px;
+      --transition: all 0.25s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* HEADER */
+
+    header {
+      background: linear-gradient(135deg, #003854, #005b7f);
+      color: var(--white);
+      padding: 18px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.35);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-mark {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .nav-title {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .nav-title span:first-child {
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+
+    .nav-title span:last-child {
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 14px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: rgba(255, 255, 255, 0.95);
+      text-decoration: none;
+      position: relative;
+      padding-bottom: 2px;
+    }
+
+    .nav-links a:not(.nav-cta)::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: #c7f9cc;
+      transition: width 0.2s ease;
+    }
+
+    .nav-links a:not(.nav-cta):hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      padding: 8px 18px;
+      border-radius: 999px;
+      background: #047857;
+      color: #ecfdf5;
+      font-weight: 600;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(4, 120, 87, 0.45);
+      transition: var(--transition);
+      text-decoration: none;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 30px rgba(4, 120, 87, 0.6);
+      text-decoration: none;
+    }
+
+    /* HERO */
+
+    .hero {
+      padding: 40px 24px 52px;
+      background:
+        radial-gradient(circle at top left, rgba(34, 197, 94, 0.12), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.14), transparent 55%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 32px;
+      align-items: stretch;
+    }
+
+    @media (max-width: 860px) {
+      .hero-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.7);
+      color: #e5e7eb;
+      margin-bottom: 16px;
+    }
+
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #4ade80;
+    }
+
+    .hero h1 {
+      font-size: clamp(26px, 3.1vw, 34px);
+      line-height: 1.2;
+      margin-bottom: 10px;
+      color: #0b1120;
+    }
+
+    .hero-subtitle {
+      max-width: 520px;
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    .hero-slogan {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 22px;
+    }
+
+    .hero-info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+      font-size: 13px;
+    }
+
+    @media (max-width: 640px) {
+      .hero-info-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .hero-info-card {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+      backdrop-filter: blur(6px);
+    }
+
+    .hero-info-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #6b7280;
+      margin-bottom: 4px;
+    }
+
+    .hero-info-value {
+      font-size: 13px;
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .btn-primary {
+      border-radius: 999px;
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      background: linear-gradient(135deg, #059669, #10b981);
+      color: #ecfdf5;
+      cursor: pointer;
+      box-shadow: 0 14px 30px rgba(5, 150, 105, 0.45);
+      transition: var(--transition);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 40px rgba(5, 150, 105, 0.6);
+      text-decoration: none;
+    }
+
+    .btn-ghost {
+      font-size: 13px;
+      border-radius: 999px;
+      padding: 9px 16px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      color: #374151;
+      background: rgba(255, 255, 255, 0.9);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .btn-ghost:hover {
+      background: #e5e7eb;
+      text-decoration: none;
+    }
+
+    .hero-note {
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    /* HERO MEDIA */
+
+    .hero-media {
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      position: relative;
+      background: radial-gradient(circle at top, #0f172a, #08141f);
+      color: #e5e7eb;
+      min-height: 260px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .hero-media-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(160deg, rgba(15, 23, 42, 0.1), transparent 40%, rgba(8, 47, 73, 0.8) 100%);
+      pointer-events: none;
+    }
+
+    .hero-media-inner {
+      position: relative;
+      z-index: 1;
+      padding: 18px 18px 16px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .hero-media-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .hero-media-tag {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    .hero-media-pill {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(34, 197, 94, 0.12);
+      border: 1px solid rgba(34, 197, 94, 0.7);
+      color: #bbf7d0;
+    }
+
+    .hero-media-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .hero-media-text {
+      font-size: 12px;
+      color: #cbd5f5;
+      max-width: 280px;
+    }
+
+    .hero-media-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .hero-media-chip {
+      font-size: 11px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .hero-media-chip-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #4ade80;
+    }
+
+    .hero-media-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hero-media-card {
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      font-size: 11px;
+      min-width: 0;
+    }
+
+    .hero-media-card strong {
+      display: block;
+      font-size: 12px;
+      margin-bottom: 3px;
+    }
+
+    .hero-media-forest {
+      flex: 1;
+      text-align: right;
+      font-size: 11px;
+      opacity: 0.9;
+    }
+
+    /* MAIN CONTENT SECTIONS */
+
+    main {
+      flex: 1;
+      padding: 0 24px 40px;
+    }
+
+    section {
+      padding: 26px 0;
+      border-top: 1px solid rgba(148, 163, 184, 0.35);
+    }
+
+    section:first-of-type {
+      border-top: none;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .section-sub {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .layout-two-cols {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: 28px;
+    }
+
+    @media (max-width: 900px) {
+      .layout-two-cols {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 18px 18px 16px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .prose {
+      font-size: 14px;
+      color: #111827;
+    }
+
+    .prose p + p {
+      margin-top: 10px;
+    }
+
+    .prose ul {
+      margin-left: 18px;
+      margin-top: 8px;
+    }
+
+    .prose ul li {
+      margin-bottom: 4px;
+    }
+
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .pill {
+      font-size: 11px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: #f9fafb;
+      color: #374151;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 10px;
+      font-size: 13px;
+    }
+
+    .meta-item-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+
+    .meta-item-value {
+      font-weight: 500;
+    }
+
+    /* TRACKS */
+
+    .tracks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 14px;
+      font-size: 13px;
+    }
+
+    .track-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 14px 14px 12px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .track-badge {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #64748b;
+      margin-bottom: 4px;
+    }
+
+    .track-title {
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #111827;
+    }
+
+    .track-tagline {
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    /* PROGRAM LINK */
+
+    .program-box {
+      border-radius: var(--radius-lg);
+      border: 1px dashed #94a3b8;
+      background: #f9fafb;
+      padding: 16px 16px 14px;
+      font-size: 13px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .program-box strong {
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* SPEAKERS */
+
+    .speakers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+    }
+
+    .speaker-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 14px 14px 12px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-soft);
+      font-size: 13px;
+    }
+
+    .speaker-name {
+      font-weight: 600;
+      margin-bottom: 2px;
+      color: #111827;
+    }
+
+    .speaker-tag {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #6b7280;
+      margin-bottom: 2px;
+    }
+
+    /* FEE / WHAT'S INCLUDED */
+
+    .fee-highlight {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .fee-note {
+      font-size: 13px;
+      color: #6b7280;
+      margin-top: 6px;
+    }
+
+    .list-check {
+      list-style: none;
+      font-size: 13px;
+      margin: 17px 0;
+    }
+
+    .list-check li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .check-icon {
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      background: #bbf7d0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #166534;
+      flex-shrink: 0;
+    }
+
+    /* FORM / REGISTRATION BLOCK */
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: 24px;
+    }
+
+    @media (max-width: 880px) {
+      .form-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .form-footnote {
+      font-size: 11px;
+      color: #6b7280;
+      margin-top: 4px;
+    }
+
+    /* VENUE / GALLERY */
+
+    .venue-card {
+      background: linear-gradient(145deg, #022c22, #022c3a);
+      color: #e5e7eb;
+      border-radius: var(--radius-lg);
+      padding: 16px 16px 14px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(15, 118, 110, 0.7);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 13px;
+    }
+
+    .venue-card h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .venue-tag {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #a7f3d0;
+    }
+
+    .venue-extra {
+      font-size: 12px;
+      color: #bfdbfe;
+      margin-top: 4px;
+    }
+
+    .venue-link {
+      margin-top: 8px;
+      font-size: 13px;
+    }
+
+    .venue-link a {
+      color: #a5f3fc;
+      text-decoration: underline;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 18px;
+    }
+
+    @media (max-width: 900px) {
+      .gallery-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .gallery-main {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .gallery-main img {
+      width: 100%;
+      height: 100%;
+      max-height: 360px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .gallery-thumbs {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .gallery-thumbs img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 6px 14px rgba(15, 23, 42, 0.25);
+    }
+
+    .map-card {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      background: #f9fafb;
+      padding: 14px 14px 12px;
+      font-size: 13px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .map-card-title {
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #111827;
+    }
+
+    .map-card a {
+      font-weight: 500;
+    }
+
+    /* FOOTER */
+
+    footer {
+      padding: 18px 24px 24px;
+      border-top: 1px solid rgba(148, 163, 184, 0.4);
+      background: #0f172a;
+      color: #9ca3af;
+      font-size: 12px;
+      margin-top: auto;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 18px;
+    }
+
+    @media (max-width: 780px) {
+      .footer-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .footer-title {
+      font-weight: 600;
+      color: #e5e7eb;
+      margin-bottom: 4px;
+    }
+
+    .footer-list {
+      list-style: none;
+      margin-top: 4px;
+    }
+
+    .footer-list li {
+      margin-bottom: 3px;
+    }
+
+    .footer-list span {
+      color: #e5e7eb;
+    }
+
+    .footer-small {
+      margin-top: 10px;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <header>
+    <div class="container">
+      <nav class="nav">
+        <div class="nav-left">
+          <div class="logo-mark">MI</div>
+          <div class="nav-title">
+            <span>Выездная научно-практическая конференция</span>
+            <span>Метод Илизарова в трёх соснах · 2026</span>
+          </div>
+        </div>
+        <div class="nav-links">
+          <a href="#about">О проекте</a>
+          <a href="#tracks">Разделы</a>
+          <a href="#fee">Условия участия</a>
+          <a href="#location">Локация</a>
+          <a href="#speakers">Спикеры</a>
+          <a href="https://forms.gle/9U3uciKC9FbfLkj16" target="_blank" class="nav-cta">Оставить заявку</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="container hero-grid">
+      <div>
+        <div class="badge">
+          <div class="badge-dot"></div>
+          Травматология и ортопедия аппаратом
+        </div>
+
+        <h1>Метод Илизарова в трёх соснах</h1>
+        <p class="hero-subtitle">
+          Выездная конференция для травматологов-ортопедов на природе — с практикой, дискуссиями и живым общением в тишине леса.
+        </p>
+
+        <p class="hero-slogan">
+          На берегу озера среди сосен — пространство, где природа, наука и метод Илизарова встречаются в одном месте.
+        </p>
+
+        <div class="hero-info-grid">
+          <div class="hero-info-card">
+            <div class="hero-info-label">Даты проведения</div>
+            <div class="hero-info-value">5–7 июня 2026 года</div>
+          </div>
+          <div class="hero-info-card">
+            <div class="hero-info-label">Место</div>
+            <div class="hero-info-value">
+              Курганская область, база отдыха «Голубые озера»
+            </div>
+          </div>
+          <div class="hero-info-card">
+            <div class="hero-info-label">Участие</div>
+            <div class="hero-info-value">Ординаторы, аспиранты, молодые специалисты, практикующие врачи</div>
+          </div>
+        </div>
+
+        <div class="hero-actions">
+          <a href="https://forms.gle/9U3uciKC9FbfLkj16" target="_blank" class="btn-primary">
+            Оставить заявку участника
+          </a>
+          <a href="#location" class="btn-ghost">
+            Посмотреть локацию
+          </a>
+        </div>
+
+        <p class="hero-note">
+          Организационный взнос: 7000 ₽ с человека (всё включено).  
+          Контакт для связи: <strong>+7 912 277 17 36</strong> (Telegram, WhatsApp, МАКС).
+        </p>
+      </div>
+
+      <aside class="hero-media" aria-hidden="true">
+        <div class="hero-media-overlay"></div>
+        <div class="hero-media-inner">
+          <div class="hero-media-top">
+            <div>
+              <div class="hero-media-tag">Курганская область · база отдыха «Голубые озера»</div>
+              <div class="hero-media-title">
+                Метод Илизарова в формате лесной выездной школы
+              </div>
+              <p class="hero-media-text">
+                Три дня практических разборов, мастер-классов и неформального общения на берегу озера среди сосен.
+              </p>
+
+              <div class="hero-media-chips">
+                <div class="hero-media-chip">
+                  <span class="hero-media-chip-dot"></span>
+                  аппарат Илизарова
+                </div>
+                <div class="hero-media-chip">
+                  <span class="hero-media-chip-dot"></span>
+                  реконструктивная ортопедия
+                </div>
+                <div class="hero-media-chip">
+                  <span class="hero-media-chip-dot"></span>
+                  боевые и ургентные травмы
+                </div>
+              </div>
+            </div>
+            <div class="hero-media-pill">
+              5–7 июня 2026<br>выездная конференция
+            </div>
+          </div>
+
+          <div class="hero-media-bottom">
+            <div class="hero-media-card">
+              <strong>Формат «всё включено»</strong>
+              Проживание, питание, трансфер, баня, сап-борды, чаны, спорт и йога включены в оргвзнос.
+            </div>
+            <div class="hero-media-forest">
+              На берегу озера среди сосен — пространство для обмена опытом без суеты города.
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <main class="container">
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="section-header">
+        <h2 class="section-title">О проекте</h2>
+        <p class="section-sub">
+          Неформальная, но профессионально насыщенная встреча травматологов-ортопедов на базе отдыха под Курганом.
+        </p>
+      </div>
+
+      <div class="layout-two-cols">
+        <div class="card prose">
+          <p>
+            «Метод Илизарова в трёх соснах» — это выездная научно-практическая конференция, где травматологи-ортопеды
+            собираются на природе, чтобы обсуждать сложные клинические случаи, обмениваться опытом и учиться друг у друга.
+          </p>
+          <p>
+            За три дня участники погружаются в темы реконструктивной ортопедии, ургентной и боевой травмы, гнойной
+            хирургии и диагностики застарелых повреждений, совмещая лекции и разборы с неформальным общением у костра,
+            прогулками вдоль озера и практиками заботы о себе.
+          </p>
+          <p>
+            Организаторы — инициативная группа травматологов-ортопедов из городов <strong>Курган, Тюмень и Челябинск</strong>,
+            которые верят, что качественное профессиональное общение возможно и вне стен конференц-залов.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="meta-grid" style="margin-bottom:12px;">
+            <div>
+              <div class="meta-item-label">Даты</div>
+              <div class="meta-item-value">5–7 июня 2026 года</div>
+            </div>
+            <div>
+              <div class="meta-item-label">Локация</div>
+              <div class="meta-item-value">
+                Курганская область, база отдыха «Голубые озера»
+              </div>
+            </div>
+            <div>
+              <div class="meta-item-label">Формат участия</div>
+              <div class="meta-item-value">
+                Очное, с проживанием на территории базы отдыха
+              </div>
+            </div>
+          </div>
+
+          <p class="section-sub">
+            Организаторы:
+          </p>
+
+          <ul class="list-check">
+            <li>
+              <span class="check-icon">✓</span>
+              <span>инициативная группа травматологов-ортопедов из г. Кургана, Тюмени и Челябинска;</span>
+            </li>
+          </ul>
+
+          <p class="fee-note">
+            Формат мероприятия рассчитан на ограниченное количество участников — для того, чтобы было достаточно времени
+            на разбор кейсов и личное общение.
+          </p>
+
+          <div class="pill-list">
+            <span class="pill">метод Илизарова</span>
+            <span class="pill">чрескостный остеосинтез</span>
+            <span class="pill">реконструктивная хирургия</span>
+            <span class="pill">боевые и ургентные травмы</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRACKS / SCIENTIFIC SECTIONS -->
+    <section id="tracks">
+      <div class="section-header">
+        <h2 class="section-title">Научно-образовательные разделы</h2>
+        <p class="section-sub">
+          От фундаментальных знаний и эксперимента до практических решений у реального пациента.
+        </p>
+      </div>
+
+      <div class="tracks-grid">
+        <article class="track-card">
+          <div class="track-badge">Раздел 1</div>
+          <h3 class="track-title">
+            Современные решения в ортопедии: от фундаментальных знаний к практике
+          </h3>
+          <p class="track-tagline">
+            Фундаментальные исследования, экспериментальные модели и их трансляция в клинические протоколы.
+          </p>
+        </article>
+
+        <article class="track-card">
+          <div class="track-badge">Раздел 2</div>
+          <h3 class="track-title">
+            Реконструктивная ортопедия аппаратом
+          </h3>
+          <p class="track-tagline">
+            Реконструкция конечностей, коррекция деформаций, удлинения и этапное лечение с использованием аппарата.
+          </p>
+        </article>
+
+        <article class="track-card">
+          <div class="track-badge">Раздел 3</div>
+          <h3 class="track-title">
+            Боевая травма аппаратом Илизарова
+          </h3>
+          <p class="track-tagline">
+            Огнестрельные и взрывные поражения конечностей, тактика и возможности внешней фиксации.
+          </p>
+        </article>
+
+        <article class="track-card">
+          <div class="track-badge">Раздел 4</div>
+          <h3 class="track-title">
+            Аппарат или пластина? Выбор в ургентной и экстренной травме
+          </h3>
+          <p class="track-tagline">
+            Алгоритмы выбора метода фиксации и дискуссионные клинические случаи.
+          </p>
+        </article>
+
+        <article class="track-card">
+          <div class="track-badge">Раздел 5</div>
+          <h3 class="track-title">
+            Хирургический кружок: швы сухожилий
+          </h3>
+          <p class="track-tagline">
+            Практический блок с отработкой техники швов сухожилий и обсуждением реабилитации.
+          </p>
+        </article>
+
+        <article class="track-card">
+          <div class="track-badge">Раздел 6</div>
+          <h3 class="track-title">
+            Гнойная реконструктивная хирургия
+          </h3>
+          <p class="track-tagline">
+            Хроническая инфекция, нестабильный остеосинтез, костные дефекты и восстановление опороспособности.
+          </p>
+        </article>
+
+        <article class="track-card">
+          <div class="track-badge">Раздел 7</div>
+          <h3 class="track-title">
+            Диагностика застарелой травмы в полевых и стационарных условиях
+          </h3>
+          <p class="track-tagline">
+            Подходы к диагностике последствий травм в условиях ограниченных ресурсов и телемедицины.
+          </p>
+        </article>
+
+        <article class="track-card">
+          <div class="track-badge">Образовательный блок</div>
+          <h3 class="track-title">
+            Мастер-класс по академическому письму
+          </h3>
+          <p class="track-tagline">
+            Как превращать клинический опыт в статьи и тезисы, понимать требования журналов и грамотно выстраивать текст.
+          </p>
+        </article>
+
+        <article class="track-card">
+          <div class="track-badge">Образовательный блок</div>
+          <h3 class="track-title">
+            Практика: использование ИИ в поиске информации
+          </h3>
+          <p class="track-tagline">
+            Работа с рекомендациями, базами данных и статьями с помощью инструментов ИИ, без потери критического мышления.
+          </p>
+        </article>
+      </div>
+
+      <div id="program" style="margin-top:20px;">
+        <div class="program-box">
+          <div>
+            <strong>Полная программа мероприятия</strong>
+            <span>
+              Подробное расписание секций, мастер-классов и развлекательной программы будет опубликовано ближе к дате
+              проведения и разослано зарегистрированным участникам.
+            </span>
+          </div>
+          <div>
+            <a href="#" class="btn-ghost" onclick="return false;">
+              Скачать программу (позже)
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEE / WHAT'S INCLUDED -->
+    <section id="fee">
+      <div class="section-header">
+        <h2 class="section-title">Условия участия и оргвзнос</h2>
+        <p class="section-sub">
+          Формат «всё включено» для спокойного погружения в тему без бытовых забот.
+        </p>
+      </div>
+
+      <div class="layout-two-cols">
+        <div class="card">
+          <p class="fee-highlight">Организационный взнос: 7000 ₽ с человека</p>
+          <p>
+            Фиксированный оргвзнос покрывает все основные расходы участника на время проведения конференции.
+          </p>
+
+          <ul class="list-check">
+            <li>
+              <span class="check-icon">✓</span>
+              <span>проживание на территории базы отдыха «Голубые озера» на весь период мероприятия;</span>
+            </li>
+            <li>
+              <span class="check-icon">✓</span>
+              <span>полноценное питание (включая кофе-брейки и вечерние встречи);</span>
+            </li>
+            <li>
+              <span class="check-icon">✓</span>
+              <span>трансфер от центра Кургана до базы отдыха и обратно;</span>
+            </li>
+            <li>
+              <span class="check-icon">✓</span>
+              <span>участие во всех научных секциях, обсуждениях и мастер-классах;</span>
+            </li>
+            <li>
+              <span class="check-icon">✓</span>
+              <span>развлекательная программа: баня, банные чаны, сап-бординг, спортивные активности, йога;</span>
+            </li>
+            <li>
+              <span class="check-icon">✓</span>
+              <span>доступ к закрытому чату участников и стартовый пакет материалов.</span>
+            </li>
+          </ul>
+
+          <p class="fee-note">
+            Подробная информация об оплате будет отправлена на указанный при регистрации номер телефона через выбранный
+            мессенджер.
+          </p>
+        </div>
+
+        <aside class="venue-card">
+          <div class="venue-tag">Организаторы</div>
+          <h3>Инициативная группа травматологов-ортопедов</h3>
+          <p>
+            Конференцию организуют практикующие врачи из городов Курган, Тюмень и Челябинск. Это независимый проект без
+            привязки к конкретному учреждению, созданный «снизу» — ради обмена опытом и поддержки профессионального сообщества.
+          </p>
+          <p class="venue-extra">
+            По организационным вопросам можно писать и звонить:
+            <br>
+            <strong>+7 912 277 17 36</strong> (Telegram, WhatsApp, МАКС).
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- LOCATION / GALLERY -->
+    <section id="location">
+      <div class="section-header">
+        <h2 class="section-title">Локация и атмосфера</h2>
+        <p class="section-sub">
+          База отдыха «Голубые озера» в Курганской области — лес, озеро, домики и маршруты для пеших прогулок.
+        </p>
+      </div>
+
+      <div class="gallery-grid">
+        <div>
+          <div class="gallery-main">
+            <!-- здесь можно положить актуальное фото базы отдыха -->
+            <img src="glamping-main.jpg" alt="Домики на базе отдыха «Голубые озера» на фоне леса">
+          </div>
+          <div class="gallery-thumbs">
+            <img src="glamping-fire.jpg" alt="Вечерняя зона отдыха с костром на базе отдыха «Голубые озера»">
+            <img src="glamping-hammock.jpg" alt="Зона отдыха с гамаком и видом на лес">
+            <img src="glamping-forest.jpg" alt="Тропа среди сосен рядом с озером">
+          </div>
+        </div>
+
+        <div class="map-card">
+          <div class="map-card-title">База отдыха «Голубые озёра» на карте</div>
+          <p>
+            База отдыха находится в живописном месте в Курганской области. Точное расположение можно посмотреть в Google Maps
+            по ссылке ниже.
+          </p>
+          <p style="margin-top:8px;">
+            <a href="https://www.google.com/maps?vet=10CAAQoqAOahcKEwjIjtCAyfmQAxUAAAAAHQAAAAAQHQ..i&pvq=OhYweDA6MHhmZjg1OGY4Y2ZhMjEyZTVh&fvr=1&cs=0&um=1&ie=UTF-8&fb=1&gl=us&sa=X&ftid=0x43b79793fcc93339:0xff858f8cfa212e5a"
+               target="_blank" rel="noopener noreferrer">
+              Открыть базу отдыха «Голубые озера» в Google Maps
+            </a>
+          </p>
+          <p class="fee-note">
+            Локация также представлена во <a href="https://vk.com/golubyeozera45" target="_blank" rel="noopener noreferrer">вКонтакте-группе базы отдыха</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SPEAKERS -->
+    <section id="speakers">
+      <div class="section-header">
+        <h2 class="section-title">Спикеры и модераторы</h2>
+        <p class="section-sub">
+          Врачи-практики, работающие с методом Илизарова и сложной травмой.
+        </p>
+      </div>
+
+      <div class="speakers-grid">
+        <article class="speaker-card">
+          <div class="speaker-tag">Спикер</div>
+          <div class="speaker-name">Сутягин И.В.</div>
+        </article>
+
+        <article class="speaker-card">
+          <div class="speaker-tag">Спикер</div>
+          <div class="speaker-name">Комаров В.И.</div>
+        </article>
+
+        <article class="speaker-card">
+          <div class="speaker-tag">Спикер</div>
+          <div class="speaker-name">Гнутикова О.В.</div>
+        </article>
+
+        <article class="speaker-card">
+          <div class="speaker-tag">Спикер</div>
+          <div class="speaker-name">Ясиновский В.С.</div>
+        </article>
+
+        <article class="speaker-card">
+          <div class="speaker-tag">Спикер</div>
+          <div class="speaker-name">Шабалин Д.А.</div>
+        </article>
+
+        <article class="speaker-card">
+          <div class="speaker-tag">Спикер</div>
+          <div class="speaker-name">Ермаков А.М.</div>
+        </article>
+
+        <article class="speaker-card">
+          <div class="speaker-tag">Спикер</div>
+          <div class="speaker-name">Дьячков К.А.</div>
+        </article>
+
+        <article class="speaker-card">
+          <div class="speaker-tag">Спикер</div>
+          <div class="speaker-name">Сергеев Г.К.</div>
+        </article>
+      </div>
+    </section>
+
+    <!-- REGISTRATION (GOOGLE FORM LINK) -->
+    <section id="registration">
+      <div class="section-header">
+        <h2 class="section-title">Заявка на участие</h2>
+        <p class="section-sub">
+          Заявка открывается в новом окне Google Форм — заполните её, чтобы получить подтверждение участия.
+        </p>
+      </div>
+
+      <div class="card" style="padding: 30px; text-align: center;">
+        <a href="https://forms.gle/9U3uciKC9FbfLkj16"
+           target="_blank"
+           class="btn-primary"
+           style="font-size: 16px; padding: 14px 26px;">
+          Открыть форму регистрации
+        </a>
+
+        <p class="form-footnote" style="margin-top: 14px;">
+          После отправки формы организаторы свяжутся с вами по указанному номеру телефона.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <div class="footer-title">Метод Илизарова в трёх соснах · 2026</div>
+        <p>
+          Выездная научно-практическая конференция по травматологии и ортопедии аппаратом в формате выезда на базу отдыха в Курганской области.
+        </p>
+        <p class="footer-small">
+          Организаторы: инициативная группа травматологов-ортопедов из г. Кургана, Тюмени и Челябинска.
+        </p>
+      </div>
+      <div>
+        <div class="footer-title">Ключевая информация</div>
+        <ul class="footer-list">
+          <li><span>Даты:</span> 5–7 июня 2026 года</li>
+          <li><span>Место:</span> Курганская область, база отдыха «Голубые озера»</li>
+          <li><span>Оргвзнос:</span> 7000 ₽ с человека (всё включено)</li>
+          <li><span>Контакты:</span> +7 912 277 17 36 (Telegram, WhatsApp, МАКС)</li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
